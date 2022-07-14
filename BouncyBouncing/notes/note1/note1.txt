@@ -1,0 +1,5 @@
+Controls
+--------
+Left Right to choose direction
+Tap a button when on the ground to bounce higher
+if tap in good timing, bounce even higher

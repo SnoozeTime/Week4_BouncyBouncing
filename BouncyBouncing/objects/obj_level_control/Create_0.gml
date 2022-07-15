@@ -1,18 +1,17 @@
-
-
-spawn = obj_spawn
+event_inherited()
 
 // Set player position
+
+alarm[0] = 5
 
 
 respawn = function() {
 	with obj_player {
-		x = other.spawn.x
-		y = other.spawn.y
+		x = other.current_player_start.x
+		y = other.current_player_start.y
+		player_reset()
 	}
 }
-
-respawn()
 
 level_done = function() {
 	with obj_player {

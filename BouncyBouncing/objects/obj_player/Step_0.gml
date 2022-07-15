@@ -30,7 +30,7 @@ character_move_y(_dy)
 
 // Check if on ground.
 // -------------------
-if scr_tile_meeting(x, y+1, "Walls") {
+if scr_tile_meeting(x, y+1, collision_layer_name) {
 	on_floor = true
 	
 	vsp = 0
@@ -49,6 +49,7 @@ if scr_tile_meeting(x, y+1, "Walls") {
 		
 			current_floor_frame = frames_on_floor
 			vsp = -current_jump_boost*jump_vel	
+			instance_create_layer(x, y, layer, obj_dust)
 		}
 	}
 } else {

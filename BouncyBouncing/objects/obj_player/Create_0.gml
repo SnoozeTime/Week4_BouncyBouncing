@@ -7,6 +7,8 @@ enum PlayerState {
 	Done
 }
 
+collision_layer_name = "Walls"
+
 on_floor = false
 my_state = PlayerState.Playing
 
@@ -36,3 +38,8 @@ move_vel = 2*32
 // frames on floor
 frames_on_floor = 5
 current_floor_frame = 5
+
+
+player_reset = function() {
+	current_jump_boost = 1.0	
+}

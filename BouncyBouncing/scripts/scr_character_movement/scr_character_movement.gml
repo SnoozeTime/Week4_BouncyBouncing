@@ -22,7 +22,7 @@ function character_move_x(_dx){
 	
 		while _move != 0 {
 		
-			if scr_tile_meeting(x+_sign, y, "Walls") {
+			if scr_tile_meeting(x+_sign, y, collision_layer_name) {
 				break	
 			} else {
 				x += _sign
@@ -43,7 +43,7 @@ function character_move_y(_dy) {
 	
 		while _move != 0 {
 		
-			if scr_tile_meeting(x, y+_sign, "Walls") {
+			if scr_tile_meeting(x, y+_sign, collision_layer_name) {
 				break	
 			} else {
 				y += _sign

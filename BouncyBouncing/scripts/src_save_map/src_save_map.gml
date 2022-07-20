@@ -1,9 +1,12 @@
 /*
 	Save the current level to a file (buffer?)
 */ 
-function editor_save(){
+function editor_save(_file_folder, _level_name){
 
 	with obj_editor_control {
+		
+		var _file_name = string_interpolate("{}{}.lvl", [_file_folder, _level_name])
+		
 		var _buf = buffer_create(4096, buffer_fixed, 1)
 		var _b_written = 0
 		// map width and height. OK u8
@@ -58,57 +61,64 @@ function editor_save(){
 		
 		log("BUFFER LENGTH = " + string(buffer_tell(_buf)))
 		log("Wrote " + string(_b_written) + " bytes")
-		buffer_save(_buf, included_file_path+"Level1.level");
+		buffer_save(_buf, _file_name);
 		buffer_delete(_buf)
 	}
 }
 
-function editor_load() {
+function editor_load(_file_folder, _level_name, _in_editor=false) {
 	with obj_game {
 		reset_level()
 		
 		
-		var _buf = buffer_load("Level1.level")
+		var _file_name = string_interpolate("{}{}.lvl", [_file_folder, _level_name])
+		if file_exists(_file_name) {
+			var _buf = buffer_load(_file_name)
 		
-		log("BUFFER LENGTH = " + string(buffer_tell(_buf)))
-		// Tilemap
-		// ------------------------------------
-		var w = buffer_read(_buf, buffer_u8)
+			log("BUFFER LENGTH = " + string(buffer_tell(_buf)))
+			// Tilemap
+			// ------------------------------------
+			var w = buffer_read(_buf, buffer_u8)
 		
-		log("Read w=" + string(w))
-		var h = buffer_read(_buf, buffer_u8)
-		log("Read h=" + string(h))
-		tilemap_set_width(tile_map, w)
-		tilemap_set_height(tile_map, h)
-		// fill with 0
-		editor_reset_tilemap(tile_map)
+			log("Read w=" + string(w))
+			var h = buffer_read(_buf, buffer_u8)
+			log("Read h=" + string(h))
+			tilemap_set_width(tile_map, w)
+			tilemap_set_height(tile_map, h)
+			// fill with 0
+			editor_reset_tilemap(tile_map)
 		
-		var _tm_bytes = buffer_read(_buf, buffer_u16)
+			var _tm_bytes = buffer_read(_buf, buffer_u16)
 		
-		log("Read datalen=" + string(_tm_bytes))
+			log("Read datalen=" + string(_tm_bytes))
 		
-		while _tm_bytes > 0 {
-			var _x  = buffer_read(_buf, buffer_u8)
-			var _y  = buffer_read(_buf, buffer_u8)
-			var _idx  = buffer_read(_buf, buffer_u8)
-			tilemap_set(tile_map, _idx, _x, _y)
+			while _tm_bytes > 0 {
+				var _x  = buffer_read(_buf, buffer_u8)
+				var _y  = buffer_read(_buf, buffer_u8)
+				var _idx  = buffer_read(_buf, buffer_u8)
+				tilemap_set(tile_map, _idx, _x, _y)
 			
-			log(string_interpolate("Read {} at {},{}", [ _idx, _x, _y]))
-			_tm_bytes -= 3	
-		}
+				log(string_interpolate("Read {} at {},{}", [ _idx, _x, _y]))
+				_tm_bytes -= 3	
+			}
 		
-		// Objects
-		// -----------------------
-		log(buffer_tell(_buf))
-		var _has_spawn = buffer_read(_buf, buffer_bool)
-		log(_has_spawn)
-		if _has_spawn {
-			var _spawn_x = buffer_read(_buf, buffer_u16)
-			var _spawn_y= buffer_read(_buf, buffer_u16)
-			current_player_start = instance_create_layer(_spawn_x, _spawn_y, layer, obj_spawn)
-		}
+			// Objects
+			// -----------------------
+			log(buffer_tell(_buf))
+			var _has_spawn = buffer_read(_buf, buffer_bool)
+			log(_has_spawn)
+			if _has_spawn {
+				var _spawn_x = buffer_read(_buf, buffer_u16)
+				var _spawn_y= buffer_read(_buf, buffer_u16)
+				current_player_start = instance_create_layer(_spawn_x, _spawn_y, layer, obj_spawn)
+				
+				if _in_editor {
+					current_player_start.visible = true	
+				}
+			}
 		
-		buffer_delete(_buf)
+			buffer_delete(_buf)
+		}
 	}
 	
 }

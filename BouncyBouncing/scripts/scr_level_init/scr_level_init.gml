@@ -5,7 +5,7 @@ function level_init(){
 
 	with obj_level_control {
 		//level_name	
-		editor_load()
+		editor_load("", "Level2")
 		respawn()
 	}
 }

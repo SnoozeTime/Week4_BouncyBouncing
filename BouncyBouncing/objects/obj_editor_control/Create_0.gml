@@ -53,9 +53,12 @@ reset_level = function() {
 start_game = function() {
 	// Spawn level control and player
 	with instance_create_layer(x, y, layer, obj_player) {
-		collision_layer_name = "Tiles_1"	
+		//collision_layer_name = "Tiles_1"	
+		x = other.current_player_start.x
+		y = other.current_player_start.y
+		player_reset()
 	}
-	instance_create_layer(x, y, layer, obj_level_control)
+	//instance_create_layer(x, y, layer, obj_level_control)
 	with current_player_start {
 		visible = false	
 	}
@@ -66,7 +69,7 @@ start_game = function() {
 }
 
 stop_game = function() {
-	instance_destroy(obj_level_control)	
+	//instance_destroy(obj_level_control)	
 	instance_destroy(obj_player)
 	with obj_camera {
 		editor_mode = true	
@@ -82,9 +85,14 @@ stop_game = function() {
 #region GUI
 control_panel = instance_create_layer(x, y, layer, gui_panel)
 control_panel.visible = false
-filename_input = instance_create_layer(20, 20, layer, gui_textinput)
-filename_input.visible = false
-filename_input.depth = -1
+filename_input = instance_create_layer(30, 40, layer, gui_textinput)
+with filename_input {
+	visible = false
+	depth = -1
+	box_width = 150
+	label = "Level Name"
+	text = "Level1"
+}
 
 display_gui = false
 toggle_gui = function() {

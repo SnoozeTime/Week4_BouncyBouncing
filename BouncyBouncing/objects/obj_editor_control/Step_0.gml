@@ -68,7 +68,7 @@ switch draw_mode {
 		if _mouse_released {
 			show_area = false
 			var _rect = get_draw_rect()
-			editor_set_tiles_in_rect(tile_map, _rect, 1)
+			editor_set_tiles_in_rect(tile_map, _rect, 1, tile_idx_map)
 		}
 	break
 	#endregion
@@ -84,7 +84,7 @@ switch draw_mode {
 		if _mouse_released {
 			show_area = false
 			var _rect = get_draw_rect()
-			editor_set_tiles_in_rect(tile_map, _rect, 0)
+			editor_set_tiles_in_rect(tile_map, _rect, 0, tile_idx_map)
 		}
 	
 	break

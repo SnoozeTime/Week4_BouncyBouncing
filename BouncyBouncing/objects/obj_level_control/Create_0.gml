@@ -4,6 +4,8 @@ event_inherited()
 
 alarm[0] = 5
 
+current_player_start = obj_spawn
+
 
 respawn = function() {
 	with obj_player {
@@ -15,6 +17,10 @@ respawn = function() {
 
 level_done = function() {
 	with obj_player {
-		my_state = PlayerState.Done
+		on_victory()
 	}
+}
+
+player_death = function() {
+	alarm[1] = room_speed * 1.5	
 }

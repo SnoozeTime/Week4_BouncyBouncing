@@ -1,8 +1,5 @@
 {
-  "spriteId": {
-    "name": "spr_tileset_collisions",
-    "path": "sprites/spr_tileset_collisions/spr_tileset_collisions.yy",
-  },
+  "spriteId": null,
   "solid": false,
   "visible": false,
   "managed": true,

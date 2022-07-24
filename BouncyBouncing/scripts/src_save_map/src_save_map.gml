@@ -47,7 +47,7 @@ function editor_save(_file_folder, _level_name){
 		
 		// Object spawn
 		// if set, next is 1, else 0
-		if current_player_start != noone {
+		if current_player_start != noone and current_player_start != undefined {
 			buffer_write(_buf, buffer_bool, true)
 			buffer_write(_buf, buffer_u16, current_player_start.x)
 			buffer_write(_buf, buffer_u16, current_player_start.y)
@@ -58,7 +58,6 @@ function editor_save(_file_folder, _level_name){
 		}
 		
 		// Now save to file.
-		
 		log("BUFFER LENGTH = " + string(buffer_tell(_buf)))
 		log("Wrote " + string(_b_written) + " bytes")
 		buffer_save(_buf, _file_name);
@@ -72,6 +71,7 @@ function editor_load(_file_folder, _level_name, _in_editor=false) {
 		
 		
 		var _file_name = string_interpolate("{}{}.lvl", [_file_folder, _level_name])
+		log("Will load " + string(_file_name))
 		if file_exists(_file_name) {
 			var _buf = buffer_load(_file_name)
 		
@@ -113,6 +113,7 @@ function editor_load(_file_folder, _level_name, _in_editor=false) {
 				current_player_start = instance_create_layer(_spawn_x, _spawn_y, layer, obj_spawn)
 				
 				if _in_editor {
+					log("Here in editor")
 					current_player_start.visible = true	
 				}
 			}

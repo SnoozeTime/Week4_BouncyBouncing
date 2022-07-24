@@ -1,6 +1,6 @@
 // Script assets have changed for v2.3.0 see
 // https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
-function editor_set_tiles_in_rect(_tilemap, _rect, _idx){
+function editor_set_tiles_in_rect(_tilemap, _rect, _idx, _idx_map){
 	var _tile_left = tilemap_get_cell_x_at_pixel(_tilemap, _rect[0][0], _rect[0][1])
 	var _tile_top = tilemap_get_cell_y_at_pixel(_tilemap, _rect[0][0], _rect[0][1])
 	var _tile_right = tilemap_get_cell_x_at_pixel(_tilemap, _rect[1][0], _rect[1][1])
@@ -12,5 +12,5 @@ function editor_set_tiles_in_rect(_tilemap, _rect, _idx){
 		}
 	}
 			
-	editor_adjust_tiles_idx(_tilemap)
+	editor_adjust_tiles_idx(_tilemap, _idx_map)
 }
